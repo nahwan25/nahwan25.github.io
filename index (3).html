@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nahwan Al Hirzi | Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070b14;
+    --bg2: #0d1424;
+    --bg3: #111827;
+    --teal: #1D9E75;
+    --teal-light: #5DCAA5;
+    --teal-dim: rgba(29,158,117,0.12);
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --border: rgba(255,255,255,0.06);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(29,158,117,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29,158,117,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(7,11,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--teal-light);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal-light); }
+  section { position: relative; z-index: 1; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+  }
+  .hero-glow {
+    position: absolute;
+    top: 20%; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(29,158,117,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .avatar-wrap {
+    position: relative;
+    width: 120px; height: 120px;
+    margin: 0 auto 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .avatar-ring {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 2px solid var(--teal);
+    overflow: hidden;
+    background: var(--bg2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .avatar-ring img { width: 100%; height: 100%; object-fit: cover; }
+  .avatar-initials {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 700;
+    color: var(--teal-light);
+  }
+  .avatar-dot {
+    position: absolute;
+    bottom: 4px; right: 4px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--bg);
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    background: var(--teal-dim);
+    border: 1px solid rgba(29,158,117,0.25);
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    animation: fadeUp 0.8s 0.1s ease both;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: #f1f5f9;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 18px;
+    animation: fadeUp 0.8s 0.2s ease both;
+    text-align: center;
+  }
+  h1 span { color: var(--teal-light); }
+  .hero-desc {
+    font-size: 16px; font-weight: 300;
+    color: #94a3b8;
+    max-width: 540px;
+    margin: 0 auto 36px;
+    line-height: 1.75;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-btns {
+    display: flex; gap: 12px;
+    justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--teal); color: #fff; border: none; }
+  .btn-primary:hover { background: #1D9E75cc; transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--teal-light); border: 1px solid rgba(29,158,117,0.4); }
+  .btn-outline:hover { background: var(--teal-dim); transform: translateY(-1px); }
+  .hero-stats {
+    display: flex; gap: 40px;
+    justify-content: center;
+    margin-top: 56px;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--teal-light);
+  }
+  .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTIONS */
+  .sec-wrap { padding: 80px 48px; max-width: 1100px; margin: 0 auto; }
+  .sec-label {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 8px;
+  }
+  .sec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px; font-weight: 700;
+    color: #f1f5f9; margin-bottom: 40px;
+    letter-spacing: -0.01em;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover { border-color: rgba(29,158,117,0.4); transform: translateY(-3px); }
+  .project-card-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; margin-bottom: 14px;
+  }
+  .project-tag-pill {
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--teal-dim); color: var(--teal-light);
+    border: 1px solid rgba(29,158,117,0.2);
+  }
+  .project-icon { font-size: 20px; color: var(--muted); }
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 600;
+    color: #e2e8f0; margin-bottom: 8px;
+  }
+  .project-desc { font-size: 13px; color: #64748b; line-height: 1.65; margin-bottom: 16px; }
+  .project-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+  .project-link {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--teal-light);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: #fff; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px; padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-date { font-size: 12px; color: var(--muted); padding-top: 3px; line-height: 1.5; }
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 600;
+    color: #e2e8f0; margin-bottom: 3px;
+  }
+  .exp-org { font-size: 13px; color: var(--teal-light); margin-bottom: 8px; }
+  .exp-desc { font-size: 13px; color: #64748b; line-height: 1.65; }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .skill-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+  .skill-card:hover { border-color: rgba(29,158,117,0.35); }
+  .skill-icon-wrap {
+    width: 36px; height: 36px;
+    border-radius: 8px; background: var(--teal-dim);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--teal-light); margin-bottom: 12px;
+  }
+  .skill-name { font-size: 14px; font-weight: 500; color: #e2e8f0; margin-bottom: 4px; }
+  .skill-detail { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* AWARD */
+  .award-card {
+    background: var(--bg2);
+    border: 1px solid rgba(29,158,117,0.25);
+    border-radius: 14px; padding: 24px 28px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .award-icon { font-size: 32px; flex-shrink: 0; }
+  .award-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 600; color: #e2e8f0; margin-bottom: 4px; }
+  .award-sub { font-size: 13px; color: var(--muted); }
+
+  /* CONTACT */
+  #contact { border-top: 1px solid var(--border); }
+  .contact-inner { max-width: 600px; margin: 0 auto; text-align: center; padding: 80px 24px; }
+  .contact-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 8px;
+    background: var(--bg2); border: 1px solid var(--border);
+    color: #94a3b8; font-size: 13px; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: rgba(29,158,117,0.4); color: var(--teal-light); }
+
+  footer {
+    text-align: center; padding: 24px;
+    font-size: 12px; color: #334155;
+    border-top: 1px solid var(--border);
+    position: relative; z-index: 1;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { gap: 18px; }
+    .sec-wrap { padding: 60px 20px; }
+    .exp-item { grid-template-columns: 1fr; gap: 6px; }
+    .hero-stats { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">NAH</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="avatar-wrap">
+    <div class="avatar-ring">
+      <img src="photo.jpg" alt="Nahwan Al Hirzi"
+        onerror="this.style.display='none'; this.parentElement.querySelector('.avatar-initials').style.display='flex'">
+      <span class="avatar-initials" style="display:none">N</span>
+    </div>
+    <div class="avatar-dot"></div>
+  </div>
+  <div class="hero-badge" id="rotating-title">Data Scientist</div>
+  <h1>Nahwan <span>Al Hirzi</span></h1>
+  <p class="hero-desc">Turning raw data into actionable insights. Skilled in machine learning, SQL, Python, Power BI, and BigQuery to solve open-ended business problems across customer acquisition, retention, and engagement.</p>
+  <div class="hero-btns">
+    <a href="CV_Nahwan_Al_Hirzi.pdf" download class="btn btn-primary">&#8595; Download CV</a>
+    <a href="#projects" class="btn btn-outline">View Projects &rarr;</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">6</div>
+      <div class="stat-lbl">Projects</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Top 6</div>
+      <div class="stat-lbl">National</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4+</div>
+      <div class="stat-lbl">Work Experience</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">Portfolio</div>
+    <div class="sec-title reveal">Projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-card-top">
+          <span class="project-tag-pill">MLOps · Data Engineering</span>
+          <span class="project-icon">&#9881;</span>
+        </div>
+        <div class="project-name">MLOps Bitcoin Pipeline</div>
+        <div class="project-desc">Automated ELT pipeline using Apache Airflow & Docker ingesting real-time Bitcoin data from CoinGecko API; implemented CI/CD with GitHub Actions, data versioning with DVC, and 7-day price forecasting with Scikit-learn MLP Regressor.</div>
+        <div class="project-tools">
+          <span class="tool">Airflow</span>
+          <span class="tool">Docker</span>
+          <span class="tool">DVC</span>
+          <span class="tool">GitHub Actions</span>
+          <span class="tool">Python</span>
+          <span class="tool">scikit-learn</span>
+        </div>
+        <a href="https://github.com/nahwan25/MLOps-Prediction-Profit" target="_blank" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-card-top">
+          <span class="project-tag-pill">Machine Learning</span>
+          <span class="project-icon">&#128200;</span>
+        </div>
+        <div class="project-name">Telco Customer Churn Prediction</div>
+        <div class="project-desc">Predictive ML models on 7,043 customer records to identify churn behavior, achieving ROC AUC 0.84 and Recall 78.8% through Extra Trees optimization with interactive Power BI reporting.</div>
+        <div class="project-tools">
+          <span class="tool">Python</span>
+          <span class="tool">SQL</span>
+          <span class="tool">Extra Trees</span>
+          <span class="tool">Power BI</span>
+        </div>
+        <a href="https://github.com/nahwan25/Churn-detection" target="_blank" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-card-top">
+          <span class="project-tag-pill">Time Series</span>
+          <span class="project-icon">&#128202;</span>
+        </div>
+        <div class="project-name">AAPL Stock Price Forecasting</div>
+        <div class="project-desc">Forecasted Apple Inc. stock prices using ARIMA (R) on 713 trading-day records (Jan 2022–Nov 2024), achieving MAPE of 1.28% with best-fit ARIMA(0,1,2) after ADF, ACF/PACF analysis across 33 candidate models.</div>
+        <div class="project-tools">
+          <span class="tool">R</span>
+          <span class="tool">ARIMA</span>
+          <span class="tool">Time Series</span>
+          <span class="tool">Statistics</span>
+        </div>
+        <a href="https://github.com/nahwan25/Data_Analysis/blob/main/Forecasting%20ARIMA%20with%20R/Forecasting.R" target="_blank" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-card-top">
+          <span class="project-tag-pill">Dashboard · BI</span>
+          <span class="project-icon">&#128201;</span>
+        </div>
+        <div class="project-name">Gen Z Finance Insight Dashboard</div>
+        <div class="project-desc">Analyzed financial behavior of 1,652+ respondents from 20 provinces using Power BI, delivering 10+ KPI dashboards on spending patterns and financial literacy across generations.</div>
+        <div class="project-tools">
+          <span class="tool">Power BI</span>
+          <span class="tool">DAX</span>
+          <span class="tool">Data Cleaning</span>
+        </div>
+        <a href="https://drive.google.com/file/d/1lUS23phgB2vjg86QnM_eU57a2uJkc74N/view?usp=sharing" target="_blank" class="project-link">View Dashboard &rarr;</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-card-top">
+          <span class="project-tag-pill">Clustering · ML</span>
+          <span class="project-icon">&#127760;</span>
+        </div>
+        <div class="project-name">Customer Segmentation</div>
+        <div class="project-desc">Multi-approach segmentation (Value-Based, Hybrid, Revenue-Based) using Agglomerative Hierarchical Clustering optimized via manual grid search, achieving silhouette scores 0.84–0.95 across models.</div>
+        <div class="project-tools">
+          <span class="tool">Python</span>
+          <span class="tool">scikit-learn</span>
+          <span class="tool">Pandas</span>
+          <span class="tool">Seaborn</span>
+        </div>
+        <a href="https://github.com/nahwan25/Machine-Learning/tree/main/Customersegmentation2" target="_blank" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-card-top">
+          <span class="project-tag-pill">Data Engineering</span>
+          <span class="project-icon">&#128506;</span>
+        </div>
+        <div class="project-name">Weather ELT Pipeline</div>
+        <div class="project-desc">End-to-end ELT pipeline using Apache Airflow & Docker extracting historical weather data from Open-Meteo API, loaded to BigQuery, transformed via SQL, and visualized in Looker Studio at zero infrastructure cost.</div>
+        <div class="project-tools">
+          <span class="tool">BigQuery</span>
+          <span class="tool">Airflow</span>
+          <span class="tool">Looker Studio</span>
+          <span class="tool">Docker</span>
+        </div>
+        <a href="https://github.com/nahwan25/weather-elt-pipeline" target="_blank" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="border-top: 1px solid var(--border);">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">Career</div>
+    <div class="sec-title reveal">Experience</div>
+    <div class="exp-list">
+
+      <div class="exp-item reveal">
+        <div class="exp-date">Sep – Nov 2025</div>
+        <div>
+          <div class="exp-role">Census Data Processing Staff</div>
+          <div class="exp-org">Badan Pusat Statistik</div>
+          <div class="exp-desc">Processed and validated census datasets for 200+ statistical units using QGIS and ArcGIS to improve spatial data accuracy, support database integration, and assist operational reporting analysis.</div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">Jul – Aug 2025</div>
+        <div>
+          <div class="exp-role">Data Analyst Intern</div>
+          <div class="exp-org">Badan Pusat Statistik</div>
+          <div class="exp-desc">Developed automated data collection and sentiment analysis workflows using Python, YouTube Data API, and Groq API to process 10,000+ YouTube comments and aggregate data from 23 news portals, enabling scalable text analytics and research reporting.</div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">Feb 2025 – Jan 2026</div>
+        <div>
+          <div class="exp-role">Laboratory Assistant</div>
+          <div class="exp-org">Telkom University Purwokerto</div>
+          <div class="exp-desc">Delivered Business Intelligence, Database System, and Business Analytics sessions to 120+ students using Python, SQL, Power BI, and Google Data Studio to support end-to-end analytical workflows and dashboard development.</div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">Oct 2024 – Feb 2025</div>
+        <div>
+          <div class="exp-role">Machine Learning Cohort — Bangkit Academy</div>
+          <div class="exp-org">Google, Tokopedia, Traveloka (MSIB Program)</div>
+          <div class="exp-desc">Developed ML models using Random Forest and TensorFlow/Keras on 120,000+ health records for a stunting prevention application, achieving 79.97% test accuracy through predictive modelling, transfer learning, and model optimization.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="border-top: 1px solid var(--border);">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">Expertise</div>
+    <div class="sec-title reveal">Skills</div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon-wrap">&#128190;</div>
+        <div class="skill-name">SQL & Database</div>
+        <div class="skill-detail">BigQuery, PostgreSQL, MySQL, CTE, Window Functions, Aggregation</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon-wrap">&#128013;</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-detail">Pandas, NumPy, Scikit-learn, TensorFlow, Keras, Matplotlib, Seaborn</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon-wrap">&#129302;</div>
+        <div class="skill-name">Machine Learning</div>
+        <div class="skill-detail">Classification, Clustering, Time Series, Transfer Learning, Feature Engineering</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon-wrap">&#128202;</div>
+        <div class="skill-name">BI & Dashboard</div>
+        <div class="skill-detail">Power BI, Google Data Studio, Looker Studio, Tableau — KPI Reporting</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon-wrap">&#9881;</div>
+        <div class="skill-name">Data Engineering</div>
+        <div class="skill-detail">Apache Airflow, Docker, DVC, GitHub Actions, Git, ELT pipeline</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon-wrap">&#127758;</div>
+        <div class="skill-name">Cloud & GIS</div>
+        <div class="skill-detail">Google Cloud Platform, BigQuery, QGIS, ArcGIS — spatial data validation</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <div class="sec-label reveal">Recognition</div>
+      <div class="sec-title reveal">Awards</div>
+      <div class="award-card reveal">
+        <div class="award-icon">&#127942;</div>
+        <div>
+          <div class="award-title">6th Place — National Dashboard Analysis Tournament</div>
+          <div class="award-sub">UPN Veteran East Java · November 2025 · Ranked 6th out of 49 teams nationwide</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="sec-label reveal" style="text-align:center">Get in touch</div>
+    <div class="sec-title reveal" style="text-align:center; font-size:28px; margin-bottom:12px">Let's Work Together</div>
+    <p class="reveal" style="font-size:14px; color: var(--muted); line-height:1.7">Open to full-time roles as Data Scientist, Data Analyst, or Business Intelligence Analyst — especially in e-commerce, fintech, and startup environments. Available to start immediately.</p>
+    <div class="contact-links reveal">
+      <a href="mailto:nahwanalhirzi8@gmail.com" class="contact-link">&#9993; nahwanalhirzi8@gmail.com</a>
+      <a href="https://linkedin.com/in/nahwanalhirzi" target="_blank" class="contact-link">&#128101; LinkedIn</a>
+      <a href="https://github.com/nahwan25" target="_blank" class="contact-link">&#128187; GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>&copy; 2026 Nahwan Al Hirzi &mdash; Built with HTML &amp; hosted on GitHub Pages</footer>
+
+<script>
+  const titles = ['Data Scientist', 'Data Analyst', 'BI Analyst'];
+  let titleIdx = 0;
+  const titleEl = document.getElementById('rotating-title');
+  setInterval(() => {
+    titleEl.style.opacity = '0';
+    titleEl.style.transform = 'translateY(-8px)';
+    setTimeout(() => {
+      titleIdx = (titleIdx + 1) % titles.length;
+      titleEl.textContent = titles[titleIdx];
+      titleEl.style.opacity = '1';
+      titleEl.style.transform = 'translateY(0)';
+    }, 400);
+  }, 2500);
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
